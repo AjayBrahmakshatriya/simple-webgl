@@ -1,0 +1,26 @@
+<html>
+	<head>
+		<title>
+			Simple-WebGL Sample 1
+		</title>
+		<script src="../scripts/webgl.js"></script>
+	</head>
+	<body>
+		<canvas id="canvas1" width=100 height=100 style="background-color:rgb(0,255,0)"></canvas>
+		<script>
+			board = new drawboard("canvas1",10);
+			angle = 0;
+			function draw_frame(){
+				board.pushplane(5,0,0,-5,0,0,0,5,0,1,0,0,1);
+				board.pushplane(5,0,5,-5,0,5,-5,0,-5,0,0,1,1);
+				board.pushplane(5,0,5,5,0,-5,-5,0,-5,0,0,1,1);
+				board.rotateY(angle);
+				board.rotateX(-20);
+				board.perspect(0.8);
+				angle = (angle+5)%360;
+				board.render();
+			}
+			board.repeat(draw_frame, 12);
+		</script>
+	</body>
+</html>

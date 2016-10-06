@@ -5,8 +5,8 @@ function drawboard(a,s)
     this.vshader=0;
     this.program=0;
     this.rf=1;
-    this.vertices=new Array();
-    this.colors=new Array();
+    this.vertices=[];
+    this.colors=[];
     this.player=0;
     this.rf=s;
     var c = document.getElementById(a);
@@ -38,7 +38,7 @@ function drawboard(a,s)
             this.vertices[i*3+0]=x;
             this.vertices[i*3+1]=y;
         }
-    }
+    };
 	this.perspect2=function(f)
     {
 		f/=this.rf;
@@ -56,7 +56,7 @@ function drawboard(a,s)
 			this.vertices[i*3+0]=x;
 			this.vertices[i*3+1]=y;
         }
-    }
+    };
     this.rotateX=function(angle)
     {
         sin=Math.sin(angle/180*Math.PI);
@@ -68,7 +68,7 @@ function drawboard(a,s)
             this.vertices[i*3+1]=y*cos-sin*z;
             this.vertices[i*3+2]=y*sin+cos*z;
         }
-    }
+    };
     this.rotateY=function(angle)
     {
         sin=Math.sin(angle/180*Math.PI);
@@ -80,7 +80,7 @@ function drawboard(a,s)
             this.vertices[i*3+0]=x*cos-sin*z;
             this.vertices[i*3+2]=x*sin+cos*z;
         }
-    }
+    };
     this.rotateZ=function(angle)
     {
         sin=Math.sin(angle/180*Math.PI);
@@ -93,7 +93,7 @@ function drawboard(a,s)
             this.vertices[i*3+1]=x*sin+cos*y;
 
         }
-    }
+    };
     this.scale=function(factor){
         for (i=0;i<this.vertices.length/3;i++)
         {
@@ -101,7 +101,7 @@ function drawboard(a,s)
             this.vertices[i*3+1]*=factor;
             this.vertices[i*3+2]*=factor;
         }
-    }
+    };
 
     this.render=function()
     {
@@ -129,7 +129,7 @@ function drawboard(a,s)
         this.vertices=[];
         this.colors=[];
 
-    }
+    };
     this.pushplane=function(x1,y1,z1,x2,y2,z2,x3,y3,z3,r,g,b,a)
     {
         this.vertices.push(x1/this.rf);
@@ -153,21 +153,21 @@ function drawboard(a,s)
         this.colors.push(g);
         this.colors.push(b);
         this.colors.push(a);
-    }
+    };
     this.repeat=function(k,fps)
     {
         clearInterval(this.player);
         this.player=setInterval(function() {k();},1000/fps);
-    }
+    };
 
     this.setvertices=function(a)
     {
         this.vertices=a;
-    }
+    };
     this.setcolors=function(a)
     {
         this.colors=a;
-    }
+    };
 
     this.pushmesh=function(k)
     {
@@ -176,7 +176,7 @@ function drawboard(a,s)
             this.vertices.push(k.vertices[i]/this.rf);
         for (i=0;i<k.colors.length;i++)
             this.colors.push(k.colors[i]);
-    }
+    };
     this.translate=function(x,y,z)
     {
         var i;
@@ -186,20 +186,19 @@ function drawboard(a,s)
             this.vertices[i*3+1]+=y/this.rf;
             this.vertices[i*3+2]+=z/this.rf;
         }
-    }
+    };
     this.pushat=function(k,x,y,z){
         var t=new mesh();
         t.vertices=k.vertices.slice(0);
         t.colors=k.colors.slice(0);
         t.translate(x,y,z);
         this.pushmesh(t);
-    }
-    
+    };
 }
 function mesh(s)
 {
-    this.vertices=new Array();
-    this.colors=new Array();
+    this.vertices=[];
+    this.colors=[];
 
     this.pushplane=function(x1,y1,z1,x2,y2,z2,x3,y3,z3,r,g,b,a)
     {
@@ -224,7 +223,7 @@ function mesh(s)
         this.colors.push(g);
         this.colors.push(b);
         this.colors.push(a);
-    }
+    };
     this.rotateX=function(angle)
     {
         sin=Math.sin(angle/180*Math.PI);
@@ -236,7 +235,7 @@ function mesh(s)
             this.vertices[i*3+1]=y*cos-sin*z;
             this.vertices[i*3+2]=y*sin+cos*z;
         }
-    }
+    };
     this.rotateY=function(angle)
     {
         sin=Math.sin(angle/180*Math.PI);
@@ -248,7 +247,7 @@ function mesh(s)
             this.vertices[i*3+0]=x*cos-sin*z;
             this.vertices[i*3+2]=x*sin+cos*z;
         }
-    }
+    };
     this.rotateZ=function(angle)
     {
         sin=Math.sin(angle/180*Math.PI);
@@ -261,7 +260,7 @@ function mesh(s)
             this.vertices[i*3+1]=x*sin+cos*y;
 
         }
-    }
+    };
     this.scale=function(factor){
         for (i=0;i<this.vertices.length/3;i++)
         {
@@ -269,12 +268,12 @@ function mesh(s)
             this.vertices[i*3+1]*=factor;
             this.vertices[i*3+2]*=factor;
         }
-    }
+    };
     this.emptymesh=function()
     {
         this.vertices=[];
         this.colors=[];
-    }
+    };
     this.translate=function(x,y,z)
     {
         var i;
@@ -284,7 +283,7 @@ function mesh(s)
             this.vertices[i*3+1]+=y;
             this.vertices[i*3+2]+=z;
         }
-    }
+    };
     this.pushmesh=function(k)
     {
  /*       var i;
@@ -295,22 +294,22 @@ function mesh(s)
    */
         this.vertices.push.apply(this.vertices,k.vertices);
         this.colors.push.apply(this.colors,k.colors);
-    }
+    };
     this.pushat=function(k,x,y,z){
         var t=new mesh();
         t.vertices=k.vertices.slice(0);
         t.colors=k.colors.slice(0);
         t.translate(x,y,z);
         this.pushmesh(t);
-    }
+    };
     this.lighten=function(a1,a2,a3){
-        
+
         amag=Math.sqrt(a1*a1+a2*a2+a3*a3);
         a1/=amag;
         a2/=amag;
         a3/=amag;
         for (i=0;i<this.vertices.length/18;i++){
-            
+
             b1=this.vertices[i*18];
             b2=this.vertices[i*18+1];
             b3=this.vertices[i*18+2];
@@ -336,8 +335,6 @@ function mesh(s)
                 for(j=0;j<3;j++)
                     this.colors[i*24+4*k+j]*=intensity;
         }
-    }
+    };
 
 }
-
-
